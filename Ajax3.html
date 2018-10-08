@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <h2>Hello,please click the button to get the data </h2>
+    <table border="2" width="300" height="100" id="t1" align="right"  bgcolor="powderblue"></table>
+    <button type="a1" onclick="fetchData()">Hello</button>
+    <script>
+        function fetchData()
+        {
+            var xhttp2 = new XMLHttpRequest();
+            xhttp2.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200)
+                {
+                    document.getElementById('t1').innerHTML = this.responseText;
+                }
+            };
+            xhttp2.open("GET", "ajax2.txt", true);
+            xhttp2.send();
+        }
+    </script>
+</body>
+</html>

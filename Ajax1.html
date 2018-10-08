@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <h2>Welcome to BizRuntime</h2>
+     <button type="button"  onclick="getData()">Click to display</button>
+    <p id="demo"></p>
+    <script>
+        function getData()
+        {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function ()
+            {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById('demo').innerHTML = this.responseText;
+                }
+            };
+            xhttp.open("GET", "ajax1.txt" , true);
+            xhttp.send();
+        }
+    </script>
+</body>
+</html>

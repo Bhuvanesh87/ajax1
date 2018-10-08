@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+        var persons = new Array();
+        function addPerson() {
+            if (validate()) {
+                var myForm = document.forms[0];
+                var firstName = myForm.firstName;
+                var lastName = myForm.lastName;
+                var age = myForm.age;
+                var email = myForm.email;
+                var person = { firstName: firstName.value, lastName: lastName.value, age: age.value, email: email.value };
+                if (myForm.editRecordId.value == -1) {
+                    persons[persons.length] = person;
+                }
+                else {
+                    persons.splice(myForm.editRecordId.value, 0, person);   
+                   myForm.editRecordId.value = -1;
+                }
+                myForm.reset();
+                populateData();
+            }
+        }
+        function populateData() {
+            if (persons.length > 0) {
+                var tablestr = "<table border='1'>";
+                tablestr += "<tr><th>SNO</th><th>FIRST NAME</th>" + "<th>lAST NAME</th><th>AGE</th><th>EMAIL</th><th>DELETE</th></tr>";
+                var person;
+                for (var i = 0; i < persons.length; i++) {
+                    person = persons[i];
+                    tablestr += "<tr>";
+                    tablestr += "<td><a href='#' onclick='retrieve(" + i + ")'>" + (i + 1) + "</a></td>";
+                    tablestr += "<td>" + person.firstName + "</td>";
+                    tablestr += "<td>" + person.lastName + "</td>";
+                    tablestr += "<td>" + person.age + "</td>";
+                    tablestr += "<td>" + person.email + "</td>";
+                    tablestr += "<td><a href='#' onclick='deleteRecord(" + i + ")'>Delete" + person.firstName + "</a></td>";
+                    tablestr += "</tr>"
+                }
+                tablestr += "</table>";
+                document.getElementById("data").innerHTML = tablestr;
+                document.getElementById("submit").innerHTML = "<input type='submit' value='submit'/>";
+            }
+            else
+            {
+                document.getElementById("data").innerHTML = "No records to display";
+                document.getElementById("submit").innerHTML = "";
+            }
+        }
+        function retrieve(index) {
+            var person = persons[index];
+            persons.splice(index, 1);
+            var myForm = document.forms[0];
+            myForm.firstName.value = person.firstName;
+            myForm.lastName.value = person.lastName;
+            myForm.age.value = person.age;
+            myForm.email.value = person.email;
+            myForm.editRecordId.value = index;  
+            populateData();
+        }
+        function deleteRecord(index) {
+            persons.splice(index, 1);
+            populateData();
+        }
+        function validate()
+        {            
+            return true;
+        }
+    </script>
+</head>
+<body>
+    <center>
+        <table border="2" bgcolor="pink">
+            <tr>
+                <td>
+                    <form>
+                        First Name : <input type="text" name="firstName" /> </br/> <br />
+                        Last Name : <input type="text" name="lastName" /> <br /> <br />
+                        Age :  <input type="text" name="age" /><br /><br />
+                        Email : <input type="text" name="email" /> <br /> <br />
+                        <input type="button" value="Add Person" onclick="addPerson()" />  <br /><br />
+                        <p id="submit"></p>
+                        <input type="hidden" name="editRecordId" value="-1" />
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </center>
+    <table id="data" border="2"></table>
+
+</body>
+</html>
